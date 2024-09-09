@@ -13,10 +13,10 @@ namespace library1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class libraryEntities : DbContext
+    public partial class libraryEntities2 : DbContext
     {
-        public libraryEntities()
-            : base("name=libraryEntities")
+        public libraryEntities2()
+            : base("name=libraryEntities2")
         {
         }
     
@@ -25,6 +25,7 @@ namespace library1.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<CartItem> CartItems { get; set; }
         public virtual DbSet<Category> Categories { get; set; }

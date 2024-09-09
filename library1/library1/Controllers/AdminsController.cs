@@ -10,112 +10,107 @@ using library1.Models;
 
 namespace library1.Controllers
 {
-    public class ShoppingCartsController : Controller
+    public class AdminsController : Controller
     {
         private libraryEntities2 db = new libraryEntities2();
 
-        // GET: ShoppingCarts
+        // GET: Admins
         public ActionResult Index()
         {
-            var shoppingCarts = db.ShoppingCarts.Include(s => s.User);
-            return View(shoppingCarts.ToList());
+            return View(db.Admins.ToList());
         }
 
-        // GET: ShoppingCarts/Details/5
+        // GET: Admins/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
-            if (shoppingCart == null)
+            Admin admin = db.Admins.Find(id);
+            if (admin == null)
             {
                 return HttpNotFound();
             }
-            return View(shoppingCart);
+            return View(admin);
         }
 
-        // GET: ShoppingCarts/Create
+        // GET: Admins/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username");
             return View();
         }
 
-        // POST: ShoppingCarts/Create
+        // POST: Admins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CartID,UserID,TotalPrice")] ShoppingCart shoppingCart)
+        public ActionResult Create([Bind(Include = "AdminID,UserName,Email,Password,Role")] Admin admin)
         {
             if (ModelState.IsValid)
             {
-                db.ShoppingCarts.Add(shoppingCart);
+                db.Admins.Add(admin);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", shoppingCart.UserID);
-            return View(shoppingCart);
+            return View(admin);
         }
 
-        // GET: ShoppingCarts/Edit/5
+        // GET: Admins/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
-            if (shoppingCart == null)
+            Admin admin = db.Admins.Find(id);
+            if (admin == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", shoppingCart.UserID);
-            return View(shoppingCart);
+            return View(admin);
         }
 
-        // POST: ShoppingCarts/Edit/5
+        // POST: Admins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CartID,UserID,TotalPrice")] ShoppingCart shoppingCart)
+        public ActionResult Edit([Bind(Include = "AdminID,UserName,Email,Password,Role")] Admin admin)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(shoppingCart).State = EntityState.Modified;
+                db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Username", shoppingCart.UserID);
-            return View(shoppingCart);
+            return View(admin);
         }
 
-        // GET: ShoppingCarts/Delete/5
+        // GET: Admins/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
-            if (shoppingCart == null)
+            Admin admin = db.Admins.Find(id);
+            if (admin == null)
             {
                 return HttpNotFound();
             }
-            return View(shoppingCart);
+            return View(admin);
         }
 
-        // POST: ShoppingCarts/Delete/5
+        // POST: Admins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
-            db.ShoppingCarts.Remove(shoppingCart);
+            Admin admin = db.Admins.Find(id);
+            db.Admins.Remove(admin);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
