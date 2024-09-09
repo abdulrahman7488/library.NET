@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using library1.Data;
 using library1.Models;
 
 namespace library1.Controllers
 {
     public class AdminsController : Controller
     {
-        private libraryEntities2 db = new libraryEntities2();
+        private library1Context db = new library1Context();
 
         // GET: Admins
         public ActionResult Index()

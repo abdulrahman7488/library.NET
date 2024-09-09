@@ -12,7 +12,7 @@ namespace library1.Controllers
 {
     public class BooksController : Controller
     {
-        private libraryEntities2 db = new libraryEntities2();
+        private libraryEntities3 db = new libraryEntities3();
 
         // GET: Books
         public ActionResult Index()

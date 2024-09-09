@@ -311,7 +311,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="libraryEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="libraryEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Books" EntityType="Self.Book" />
           <EntitySet Name="CartItems" EntityType="Self.CartItem" />
@@ -345,7 +345,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="libraryModelStoreContainer" CdmEntityContainer="libraryEntities2">
+        <EntityContainerMapping StorageEntityContainer="libraryModelStoreContainer" CdmEntityContainer="libraryEntities3">
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="libraryModel.Admin">
               <MappingFragment StoreEntitySet="Admins">
