@@ -48,7 +48,7 @@ namespace library1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image")] Book book)
+        public ActionResult Create([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image,Description")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace library1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image")] Book book)
+        public ActionResult Edit([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image,Description")] Book book)
         {
             if (ModelState.IsValid)
             {

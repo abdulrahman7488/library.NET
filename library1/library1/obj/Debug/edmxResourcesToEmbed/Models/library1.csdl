@@ -25,6 +25,7 @@
     <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <NavigationProperty Name="Category" Relationship="Self.FK__Books__CategoryI__3C69FB99" FromRole="Books" ToRole="Categories" />
     <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItems__BookI__4316F928" FromRole="Books" ToRole="CartItems" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="CartItem">
     <Key>

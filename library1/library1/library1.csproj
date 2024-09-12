@@ -300,11 +300,12 @@
     <Content Include="templates\icomoon\fonts\icomoon.ttf" />
     <Content Include="templates\icomoon\fonts\icomoon.woff" />
     <Content Include="templates\icomoon\selection.json" />
+    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admins\" />
-    <Folder Include="Views\Books\" />
     <Folder Include="Views\CartItems\" />
     <Folder Include="Views\Categories\" />
     <Folder Include="Views\ShoppingCarts\" />

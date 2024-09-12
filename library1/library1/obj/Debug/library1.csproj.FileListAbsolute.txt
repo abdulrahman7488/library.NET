@@ -162,3 +162,4 @@ C:\Users\abdurhman\Desktop\library.NET\library1\library1\obj\Debug\library1.cspr
 C:\Users\abdurhman\Desktop\library.NET\library1\library1\obj\Debug\library1.csproj.CopyComplete
 C:\Users\abdurhman\Desktop\library.NET\library1\library1\obj\Debug\library1.dll
 C:\Users\abdurhman\Desktop\library.NET\library1\library1\obj\Debug\library1.pdb
+C:\Users\abdurhman\Desktop\library.NET\library1\library1\obj\Debug\library1.csproj.AssemblyReference.cache

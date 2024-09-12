@@ -23,6 +23,7 @@
     <Property Name="CategoryID" Type="int" />
     <Property Name="number_of_books" Type="int" />
     <Property Name="image" Type="image" />
+    <Property Name="Description" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="CartItems">
     <Key>
