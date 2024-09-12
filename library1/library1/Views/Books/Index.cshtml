@@ -4,75 +4,36 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>All Books</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishedYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.number_of_books)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(Model=> Model.Description)
-        </th>
-        <th></th>
-    </tr>
+<div class="product-list" data-aos="fade-up">
+    <div class="row">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ISBN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.number_of_books)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookID })
-        </td>
-    </tr>
-}
 
-</table>
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="product-item">
+                    <figure class="product-style">
+                        <img src="~/templates/images/product-item1.jpg" alt="Books" class="product-item">
+                        <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                            Add to
+                            Cart
+                        </button>
+                    </figure>
+                    <figcaption>
+                        <h3>@item.Title</h3>
+                        <span>@item.Author</span>
+                        <div class="item-price">@item.Price</div>
+                    </figcaption>
+                </div>
+            </div>
+
+        }
+
+
+    </div><!--ft-books-slider-->
+</div><!--grid-->
