@@ -306,12 +306,16 @@
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Books\Delete.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admins\" />
     <Folder Include="Views\CartItems\" />
-    <Folder Include="Views\Categories\" />
     <Folder Include="Views\ShoppingCarts\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>

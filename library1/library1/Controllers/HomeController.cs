@@ -1,4 +1,5 @@
-﻿using System;
+﻿using library1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,11 @@ namespace library1.Controllers
 {
     public class HomeController : Controller
     {
+        private libraryEntities3 db = new libraryEntities3();
         public ActionResult Index()
         {
-            return View();
+            var categories = db.Categories.ToList();
+            return View(categories);
         }
 
     }
