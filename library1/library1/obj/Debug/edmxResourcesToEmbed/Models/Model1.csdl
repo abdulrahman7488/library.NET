@@ -23,6 +23,7 @@
     <Property Name="CategoryID" Type="Int32" />
     <Property Name="number_of_books" Type="Int32" />
     <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Category" Relationship="Self.FK__Books__CategoryI__3C69FB99" FromRole="Books" ToRole="Categories" />
     <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItems__BookI__4316F928" FromRole="Books" ToRole="CartItems" />
   </EntityType>
@@ -141,7 +142,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="libraryEntities2" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="libraryEntities4" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Admins" EntityType="Self.Admin" />
     <EntitySet Name="Books" EntityType="Self.Book" />
     <EntitySet Name="CartItems" EntityType="Self.CartItem" />

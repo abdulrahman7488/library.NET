@@ -12,7 +12,7 @@ namespace library1.Controllers
         private libraryEntities3 db = new libraryEntities3();
         public ActionResult Index()
         {
-            var categories = db.Categories.ToList();
+            var categories = db.Category.ToList();
             return View(categories);
         }
 
