@@ -14,6 +14,24 @@ namespace Bookshop.Controllers
     {
         private libraryEntities db = new libraryEntities();
 
+        public ActionResult BooksByCategory(int id)
+        {
+            var libraryEntities = new libraryEntities();
+
+            var categories = libraryEntities.Categories.Include(c => c.Books).FirstOrDefault(c => c.CategoryID == id);
+
+
+            if (categories != null)
+            {
+                // Return the list of books to the view
+                return View(categories.Books.ToList());
+            }
+
+            return HttpNotFound();
+
+        }
+
+
         // GET: Categories
         public ActionResult Index()
         {
