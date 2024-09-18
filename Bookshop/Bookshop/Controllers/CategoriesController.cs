@@ -16,20 +16,22 @@ namespace Bookshop.Controllers
 
         public ActionResult BooksByCategory(int id)
         {
-            var libraryEntities = new libraryEntities();
-
-            var categories = libraryEntities.Categories.Include(c => c.Books).FirstOrDefault(c => c.CategoryID == id);
-
-
-            if (categories != null)
+            using (var libraryEntities = new libraryEntities())
             {
-                // Return the list of books to the view
-                return View(categories.Books.ToList());
+                // جلب الفئة المحددة مع الكتب
+                var category = libraryEntities.Categories.Include(c => c.Books).FirstOrDefault(c => c.CategoryID == id);
+
+                                                         
+                if (category != null)
+                {
+                    // إرجاع قائمة الكتب المرتبطة بالفئة إلى الـ View
+                    return View(category.Books.ToList());
+                }
+
+                return HttpNotFound("Category not found.");
             }
-
-            return HttpNotFound();
-
         }
+
 
 
         // GET: Categories

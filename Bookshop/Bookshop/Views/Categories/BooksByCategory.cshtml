@@ -1,34 +1,32 @@
 ﻿@model IEnumerable<Bookshop.Models.Book>
+
 @{
-    ViewBag.Title = "BooksByCategory";
+    ViewBag.Title = "Books by Category";
 }
 
 <div class="container">
-    <h2>Books in @Model</h2>
+    <h2>@ViewBag.Title</h2>
     <div class="row">
         @foreach (var book in Model)
         {
             <div class="col-md-3">
                 <div class="card">
-                    <img src="@book.image" class="card-img-top" alt="Cover Image">
+                    @if (book.image != null)
+                    {
+                        <img src="data:image/png;base64,@(Convert.ToBase64String(book.image))" class="card-img-top" alt="Book Image">
+                    }
+                    else
+                    {
+                        <img src="~/Content/Images/default-book.png" class="card-img-top" alt="Default Book Image">
+                    }
                     <div class="card-body">
                         <h5 class="card-title">@book.Title</h5>
-                        <p class="card-text">@book.Author</p>
-                        <p class="card-text">$@book.Price</p>
-                        <a href="@Url.Action("Details", "Book", new { id = book.BookID })" class="btn btn-primary">View Details</a>
+                        <p class="card-text">Author: @book.Author</p>
+                        <p class="card-text">Price: $@book.Price</p>
+                        <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
-            </div>}
+            </div>
+        }
     </div>
 </div>
-
-
-
-<h2>Books in Category</h2>
-<ul>
-    @foreach (var book in Model)
-    {
-        <li>@book.Title - @book.Author</li>
-    }
-</ul>
-

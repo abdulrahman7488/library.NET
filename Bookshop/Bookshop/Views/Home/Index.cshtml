@@ -13,11 +13,11 @@
         <div class="col-md-12">
             <h2>Categories</h2>
             <ul class="nav nav-pills justify-content-center">
-                @foreach (var categoryies in Model)
+                @foreach (var Categories in Model)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("BooksByCategory", "Category", new { id = categoryies.CategoryID })">
-                            @categoryies.CategoryName
+                        <a class="nav-link" href="@Url.Action("BooksByCategory", "Categories", new { id = Categories.CategoryID })">
+                            @Categories.CategoryName
                         </a>
                     </li>
                 }
