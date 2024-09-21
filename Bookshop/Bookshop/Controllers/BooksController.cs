@@ -15,10 +15,25 @@ namespace Bookshop.Controllers
         private libraryEntities db = new libraryEntities();
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(string searchQuery)
         {
             var books = db.Books.Include(b => b.Category);
-            return View(books.ToList());
+
+            // فحص إذا كان هناك بحث
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                books = books.Where(b => b.Title.Contains(searchQuery) || b.Author.Contains(searchQuery));
+            }
+
+            var booksList = books.ToList();
+
+            // إذا كان هناك كتاب واحد فقط في نتائج البحث، الانتقال إلى صفحة التفاصيل
+            if (booksList.Count == 1)
+            {
+                return RedirectToAction("Details", new { id = booksList[0].BookID });
+            }
+
+            return View(booksList);
         }
 
         // GET: Books/Details/5
@@ -29,7 +44,8 @@ namespace Bookshop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var book = db.Books.FirstOrDefault(b => b.BookID == id);
+            var book = db.Books.Include(b => b.Category).FirstOrDefault(b => b.BookID == id);
+
             if (book == null)
             {
                 return HttpNotFound();

@@ -24,6 +24,31 @@
     </div>
 </div>
 
+<!-- نموذج البحث -->
+<form action="@Url.Action("Index", "Books")" method="get">
+    <div>
+        <label for="searchQuery">بحث:</label>
+        <input type="text" id="searchQuery" name="searchQuery" placeholder="ابحث عن اسم الكتاب أو الكاتب" value="@Request.QueryString["searchQuery"]" />
+    </div>
+    <button type="submit">بحث</button>
+</form>
+
+@*@if (Model.Books != null && Model.Books.Any())
+{
+<ul>
+    @foreach (var book in Model.Books)
+    {
+<li>
+    <h3>@book.Title</h3>
+    <p>الكاتب: @book.Author</p>
+    <p>الفئة: @book.Category.CategoryName</p>
+    <a href="@Url.Action("Details", "Books", new { id = book.BookID })">عرض التفاصيل</a>
+</li>}
+</ul> }
+            else
+            {
+<p>لا توجد نتائج للبحث</p>}*@
+
 
 <section id="Books" class="py-5 my-5">
     <div class="container">
@@ -43,24 +68,24 @@
                         <div class="row mt-4">
                             @foreach (var book in Model.Books)
                             {
-                    <div class="col-md-3">
-                        <div class="product-item">
-                            <figure class="product-style">
-                                <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
-                                <img src="@book.image" alt="Books" class="product-item">
+                <div class="col-md-3">
+                    <div class="product-item">
+                        <figure class="product-style">
+                            <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
+                            <img src="@book.image" alt="Books" class="product-item">
 
-                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                    Add to
-                                    Cart
-                                </button>
-                            </figure>
-                            <figcaption>
-                                <h3>@book.Title</h3>
-                                <span>@book.Author</span>
-                                <div class="item-price">@book.Price</div>
-                            </figcaption>
-                        </div>
-                    </div>}
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                Add to
+                                Cart
+                            </button>
+                        </figure>
+                        <figcaption>
+                            <h3>@book.Title</h3>
+                            <span>@book.Author</span>
+                            <div class="item-price">@book.Price</div>
+                        </figcaption>
+                    </div>
+                </div>}
                         </div>
 
 
@@ -71,7 +96,7 @@
             </div><!--inner-content-->
         </div>
 
-        
+
     </div>
 </section>
 
