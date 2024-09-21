@@ -12,8 +12,14 @@ namespace Bookshop.Controllers
         private libraryEntities db = new libraryEntities();
         public ActionResult Index()
         {
-            var categories = db.Categories.ToList();
-            return View(categories);
+            var model = new CategoryBookViewModel
+            {
+
+             Categories = db.Categories.ToList(),
+             Books = db.Books.ToList()
+
+            };
+            return View(model);
         }
 
         public ActionResult About()

@@ -28,11 +28,13 @@ namespace Bookshop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+
+            var book = db.Books.FirstOrDefault(b => b.BookID == id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
