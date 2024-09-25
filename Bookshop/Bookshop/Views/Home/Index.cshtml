@@ -17,7 +17,8 @@
         <a class="nav-link" href="@Url.Action("BooksByCategory", "Categories", new { id = Categories.CategoryID })">
             @Categories.CategoryName
         </a>
-    </li>}
+    </li>
+}
             </ul>
         </div>
 
@@ -25,29 +26,55 @@
 </div>
 
 <!-- نموذج البحث -->
-<form action="@Url.Action("Index", "Books")" method="get">
-    <div>
-        <label for="searchQuery">بحث:</label>
-        <input type="text" id="searchQuery" name="searchQuery" placeholder="ابحث عن اسم الكتاب أو الكاتب" value="@Request.QueryString["searchQuery"]" />
-    </div>
-    <button type="submit">بحث</button>
-</form>
+<div class="search-container">
+    <form action="@Url.Action("Index", "Books")" method="get">
+        <input type="text" name="searchQuery" placeholder="ابحث عن اسم الكتاب أو الكاتب" class="search-input" />
+        <button type="submit" class="search-button">بحث</button>
+    </form>
+</div>
 
-@*@if (Model.Books != null && Model.Books.Any())
-{
-<ul>
-    @foreach (var book in Model.Books)
-    {
-<li>
-    <h3>@book.Title</h3>
-    <p>الكاتب: @book.Author</p>
-    <p>الفئة: @book.Category.CategoryName</p>
-    <a href="@Url.Action("Details", "Books", new { id = book.BookID })">عرض التفاصيل</a>
-</li>}
-</ul> }
-            else
-            {
-<p>لا توجد نتائج للبحث</p>}*@
+
+
+<style>
+    /* تصميم البحث */
+    .search-container {
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .search-input {
+        width: 300px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+        .search-input:focus {
+            border-color: #6b4f34;
+            box-shadow: 0 0 8px rgba(107, 79, 52, 0.5);
+        }
+
+    .search-button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        background-color: #6b4f34;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .search-button:hover {
+            background-color: #523a27;
+        }
+
+</style>
+
 
 
 <section id="Books" class="py-5 my-5">

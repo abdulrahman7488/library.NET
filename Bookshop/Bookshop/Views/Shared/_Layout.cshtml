@@ -63,9 +63,10 @@
                                     <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
                                         <i class="icon icon-search"></i>
                                     </a>
-                                    <form role="search" method="get" class="search-box">
-                                        <input class="search-field text search-input" placeholder="Search"
-                                               type="search">
+                                    <!-- تعديل كود الفورم ليرسل طلب GET إلى BooksController -->
+                                    <form role="search" method="get" action="/Books">
+                                        <input class="search-field text search-input" name="searchQuery" placeholder="Search" type="search">
+                                        <button type="submit" class="btn btn-primary" style="display: none;">Search</button>
                                     </form>
                                 </div>
                             </div>

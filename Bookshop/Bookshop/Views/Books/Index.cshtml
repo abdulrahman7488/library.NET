@@ -4,78 +4,54 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishedYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.number_of_books)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ISBN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.number_of_books)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookID })
-        </td>
-    </tr>
-}
+<section id="Books" class="py-5 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
 
-</table>
+                <div class="section-header align-center">
+                    <div class="title">
+                        <span>Some quality items</span>
+                    </div>
+                    <h2 class="section-title">Books</h2>
+                </div>
+
+                <div class="product-list" data-aos="fade-up">
+                    <div class="row">
+
+                        <div class="row mt-4">
+                            @foreach (var book in Model)
+                            {
+                <div class="col-md-3">
+                    <div class="product-item">
+                        <figure class="product-style">
+                            <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
+                            <img src="@book.image" alt="Books" class="product-item">
+
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                Add to
+                                Cart
+                            </button>
+                        </figure>
+                        <figcaption>
+                            <h3>@book.Title</h3>
+                            <span>@book.Author</span>
+                            <div class="item-price">@book.Price</div>
+                        </figcaption>
+                    </div>
+                </div>}
+                        </div>
+
+
+                    </div><!--ft-books-slider-->
+                </div><!--grid-->
+
+
+            </div><!--inner-content-->
+        </div>
+
+
+    </div>
+</section>
