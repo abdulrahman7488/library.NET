@@ -162,4 +162,3 @@ C:\Users\abdurhman\Desktop\library.NET\Bookshop\Bookshop\obj\Debug\Bookshop.cspr
 C:\Users\abdurhman\Desktop\library.NET\Bookshop\Bookshop\obj\Debug\Bookshop.csproj.CopyComplete
 C:\Users\abdurhman\Desktop\library.NET\Bookshop\Bookshop\obj\Debug\Bookshop.dll
 C:\Users\abdurhman\Desktop\library.NET\Bookshop\Bookshop\obj\Debug\Bookshop.pdb
-C:\Users\abdurhman\Desktop\library.NET\Bookshop\Bookshop\obj\Debug\Bookshop.csproj.AssemblyReference.cache

@@ -58,18 +58,22 @@
                             </a>
 
                             <div class="action-menu">
-
-                                <div class="search-bar">
-                                    <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-                                        <i class="icon icon-search"></i>
+                                <div class="search-bar" style="display: flex; align-items: center; width: 300px;">
+                                    <!-- تعديل العرض الإجمالي -->
+                                    <a href="#" class="search-button search-toggle" data-selector="#header-wrap" style="background-color: #6f4e37; border-radius: 0 20px 20px 0; display: flex; align-items: center;">
+                                        <i class="icon icon-search" style="color: #fff; padding: 10px;"></i>
                                     </a>
                                     <!-- تعديل كود الفورم ليرسل طلب GET إلى BooksController -->
-                                    <form role="search" method="get" action="/Books">
-                                        <input class="search-field text search-input" name="searchQuery" placeholder="Search" type="search">
+                                    <form role="search" method="get" action="/Books" style="display: flex; width: 100%; margin: 0;">
+                                        <input class="search-field text search-input" name="searchQuery" placeholder="Search" type="search"
+                                               style="width: 100%; padding: 8px 10px; border-radius: 20px 0 0 20px; border: 1px solid #ddd; font-size: 16px;">
+
                                         <button type="submit" class="btn btn-primary" style="display: none;">Search</button>
                                     </form>
                                 </div>
                             </div>
+
+
 
                         </div><!--top-right-->
                     </div>
