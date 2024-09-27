@@ -15,19 +15,6 @@ namespace Bookshop.Controllers
         private libraryEntities db = new libraryEntities();
 
 
-        // Action لإرجاع قائمة الاقتراحات بناءً على المدخل
-        public JsonResult GetSuggestions(string term)
-        {
-            // استخدم قاعدة بياناتك أو قائمة افتراضية للحصول على الاقتراحات
-            var suggestions = db.Books
-                .Where(b => b.Title.Contains(term) || b.Author.Contains(term))
-                .Select(b => new { b.Title, b.Author })
-                .ToList();
-
-            return Json(suggestions, JsonRequestBehavior.AllowGet);
-        }
-
-
         // GET: Books
         public ActionResult Index(string searchQuery)
         {
