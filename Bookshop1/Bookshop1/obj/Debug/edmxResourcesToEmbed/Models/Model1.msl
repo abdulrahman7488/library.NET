@@ -80,5 +80,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DashboardStatistics">
+      <EntityTypeMapping TypeName="libraryModel.DashboardStatistic">
+        <MappingFragment StoreEntitySet="DashboardStatistics">
+          <ScalarProperty Name="InactiveBooks" ColumnName="InactiveBooks" />
+          <ScalarProperty Name="ActiveBooks" ColumnName="ActiveBooks" />
+          <ScalarProperty Name="TotalUsers" ColumnName="TotalUsers" />
+          <ScalarProperty Name="TotalCategories" ColumnName="TotalCategories" />
+          <ScalarProperty Name="TotalBooks" ColumnName="TotalBooks" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

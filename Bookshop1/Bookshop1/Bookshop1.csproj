@@ -174,6 +174,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CartItemsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\DashboardStatisticsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ShoppingCartsController.cs" />
@@ -195,6 +196,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryBookViewModel.cs" />
+    <Compile Include="Models\DashboardStatistic.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
@@ -394,6 +398,11 @@
     <Content Include="templates\icomoon\fonts\icomoon.ttf" />
     <Content Include="templates\icomoon\fonts\icomoon.woff" />
     <Content Include="templates\icomoon\selection.json" />
+    <Content Include="Views\DashboardStatistics\Create.cshtml" />
+    <Content Include="Views\DashboardStatistics\Delete.cshtml" />
+    <Content Include="Views\DashboardStatistics\Details.cshtml" />
+    <Content Include="Views\DashboardStatistics\Edit.cshtml" />
+    <Content Include="Views\DashboardStatistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

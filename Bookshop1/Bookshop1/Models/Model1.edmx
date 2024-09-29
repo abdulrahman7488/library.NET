@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="libraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="libraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admins">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -47,6 +47,17 @@
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DashboardStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TotalBooks" Type="int" />
+          <Property Name="TotalCategories" Type="int" />
+          <Property Name="TotalUsers" Type="int" />
+          <Property Name="ActiveBooks" Type="int" />
+          <Property Name="InactiveBooks" Type="int" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -142,6 +153,7 @@
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CartItems" EntityType="Self.CartItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardStatistics" EntityType="Self.DashboardStatistics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -166,8 +178,7 @@
             <End Role="CartItems" EntitySet="CartItems" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="libraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -341,7 +352,19 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
           </AssociationSet>
+          <EntitySet Name="DashboardStatistics" EntityType="libraryModel.DashboardStatistic" />
         </EntityContainer>
+        <EntityType Name="DashboardStatistic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalBooks" Type="Int32" />
+          <Property Name="TotalCategories" Type="Int32" />
+          <Property Name="TotalUsers" Type="Int32" />
+          <Property Name="ActiveBooks" Type="Int32" />
+          <Property Name="InactiveBooks" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -424,6 +447,18 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardStatistics">
+            <EntityTypeMapping TypeName="libraryModel.DashboardStatistic">
+              <MappingFragment StoreEntitySet="DashboardStatistics">
+                <ScalarProperty Name="InactiveBooks" ColumnName="InactiveBooks" />
+                <ScalarProperty Name="ActiveBooks" ColumnName="ActiveBooks" />
+                <ScalarProperty Name="TotalUsers" ColumnName="TotalUsers" />
+                <ScalarProperty Name="TotalCategories" ColumnName="TotalCategories" />
+                <ScalarProperty Name="TotalBooks" ColumnName="TotalBooks" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

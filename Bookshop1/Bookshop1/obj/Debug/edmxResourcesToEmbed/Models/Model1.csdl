@@ -170,5 +170,17 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
     </AssociationSet>
+    <EntitySet Name="DashboardStatistics" EntityType="libraryModel.DashboardStatistic" />
   </EntityContainer>
+  <EntityType Name="DashboardStatistic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TotalBooks" Type="Int32" />
+    <Property Name="TotalCategories" Type="Int32" />
+    <Property Name="TotalUsers" Type="Int32" />
+    <Property Name="ActiveBooks" Type="Int32" />
+    <Property Name="InactiveBooks" Type="Int32" />
+  </EntityType>
 </Schema>

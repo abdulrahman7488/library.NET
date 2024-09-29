@@ -1,0 +1,26 @@
+﻿@model Bookshop1.Models.DashboardStatistic
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="dashboard-container">
+    <h2>Dashboard Overview</h2>
+    <div class="stats">
+        <p>Total Books: @Model.TotalBooks</p>
+        <p>Total Categories: @Model.TotalCategories</p>
+        <p>Total Users: @Model.TotalUsers</p>
+
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .stats p {
+        font-size: 18px;
+    }
+</style>

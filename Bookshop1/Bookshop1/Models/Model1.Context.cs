@@ -32,5 +32,6 @@ namespace Bookshop1.Models
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<DashboardStatistic> DashboardStatistics { get; set; }
     }
 }

@@ -17,6 +17,7 @@
         <AssociationConnector Association="libraryModel.FK__CartItems__CartI__4222D4EF" ManuallyRouted="false" />
         <AssociationConnector Association="libraryModel.FK_CartItems_CartItems" ManuallyRouted="false" />
         <AssociationConnector Association="libraryModel.FK__ShoppingC__UserI__3F466844" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="libraryModel.DashboardStatistic" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -43,6 +43,17 @@
     <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="DashboardStatistics">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TotalBooks" Type="int" />
+    <Property Name="TotalCategories" Type="int" />
+    <Property Name="TotalUsers" Type="int" />
+    <Property Name="ActiveBooks" Type="int" />
+    <Property Name="InactiveBooks" Type="int" />
+  </EntityType>
   <EntityType Name="ShoppingCart">
     <Key>
       <PropertyRef Name="CartID" />
@@ -137,6 +148,7 @@
     <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CartItems" EntityType="Self.CartItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DashboardStatistics" EntityType="Self.DashboardStatistics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
