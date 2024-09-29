@@ -35,6 +35,7 @@
     <Property Name="Quantity" Type="int" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
     <Property Name="UserID" Type="int" />
+    <Property Name="Title" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>

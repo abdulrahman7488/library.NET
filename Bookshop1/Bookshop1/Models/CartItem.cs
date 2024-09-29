@@ -20,6 +20,7 @@ namespace Bookshop1.Models
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> UserID { get; set; }
+        public string Title { get; set; }
     
         public virtual Book Book { get; set; }
         public virtual ShoppingCart ShoppingCart { get; set; }

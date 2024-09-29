@@ -31,6 +31,7 @@
     <EntitySetMapping Name="CartItems">
       <EntityTypeMapping TypeName="libraryModel.CartItem">
         <MappingFragment StoreEntitySet="CartItems">
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="CartItemID" ColumnName="CartItemID" />
           <ScalarProperty Name="CartID" ColumnName="CartID" />
           <ScalarProperty Name="BookID" ColumnName="BookID" />

@@ -40,6 +40,7 @@
           <Property Name="Quantity" Type="int" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="UserID" Type="int" />
+          <Property Name="Title" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -222,6 +223,7 @@
           <NavigationProperty Name="Book" Relationship="Self.FK__CartItems__BookI__4316F928" FromRole="CartItems" ToRole="Books" />
           <NavigationProperty Name="ShoppingCart" Relationship="Self.FK__CartItems__CartI__4222D4EF" FromRole="CartItems" ToRole="ShoppingCart" />
           <NavigationProperty Name="User" Relationship="Self.FK_CartItems_CartItems" FromRole="CartItems" ToRole="Users" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -401,6 +403,7 @@
           <EntitySetMapping Name="CartItems">
             <EntityTypeMapping TypeName="libraryModel.CartItem">
               <MappingFragment StoreEntitySet="CartItems">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="CartItemID" ColumnName="CartItemID" />
                 <ScalarProperty Name="CartID" ColumnName="CartID" />
                 <ScalarProperty Name="BookID" ColumnName="BookID" />

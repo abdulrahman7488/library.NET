@@ -40,6 +40,7 @@
     <NavigationProperty Name="Book" Relationship="Self.FK__CartItems__BookI__4316F928" FromRole="CartItems" ToRole="Books" />
     <NavigationProperty Name="ShoppingCart" Relationship="Self.FK__CartItems__CartI__4222D4EF" FromRole="CartItems" ToRole="ShoppingCart" />
     <NavigationProperty Name="User" Relationship="Self.FK_CartItems_CartItems" FromRole="CartItems" ToRole="Users" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
