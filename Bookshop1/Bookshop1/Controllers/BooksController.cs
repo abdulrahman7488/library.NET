@@ -8,54 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using Bookshop1.Models;
 
-
 namespace Bookshop1.Controllers
 {
     public class BooksController : Controller
     {
         private libraryEntities db = new libraryEntities();
-
-
-        public IActionResult AddToCart(int id)
-        {
-            // العثور على الكتاب من قاعدة البيانات
-            var book = db.Books.Find(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-
-            // إعداد عنصر العربة
-            var cartItem = new CartItem
-            {
-                BookID = book.BookID,
-                Title = book.Title,
-                Price = book.Price,
-                Quantity = 1 // يمكنك تعيين الكمية حسب الحاجة
-            };
-
-            // إضافة العنصر إلى العربة
-            Cart cart = GetCart();
-            cart.AddItem(cartItem);
-
-            // حفظ العربة في الجلسة
-            HttpContext.Session.SetObjectAsJson("Cart", cart);
-
-            return RedirectToAction("Index", "Books");
-        }
-
-        public IActionResult ViewCart()
-        {
-            var cart = GetCart();
-            return View(cart);
-        }
-
-        private Cart GetCart()
-        {
-            var cart = HttpContext.Session.GetObjectFromJson<Cart>("Cart");
-            return cart ?? new Cart();
-        }
-
 
         // GET: Books
         public ActionResult Index(string searchQuery)
