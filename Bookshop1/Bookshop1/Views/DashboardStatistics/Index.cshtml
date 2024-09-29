@@ -1,26 +1,54 @@
 ﻿@model Bookshop1.Models.DashboardStatistic
 
-@{
-    ViewBag.Title = "Index";
-}
+@{ ViewBag.Title = "Index"; }
 
-<div class="dashboard-container">
-    <h2>Dashboard Overview</h2>
-    <div class="stats">
-        <p>Total Books: @Model.TotalBooks</p>
-        <p>Total Categories: @Model.TotalCategories</p>
-        <p>Total Users: @Model.TotalUsers</p>
-
+<div class="container">
+<h1>لوحة التحكم</h1>
+<div class="dashboard-summary">
+    <div class="card">
+        <h3>إجمالي الكتب</h3>
+        <p>@Model.TotalBooks</p>
     </div>
+    <div class="card">
+        <h3>إجمالي الفئات</h3>
+        <p>@Model.TotalCategories</p>
+    </div>
+    <div class="card">
+        <h3>إجمالي المستخدمين</h3>
+        <p>@Model.TotalUsers</p>
+    </div>
+    <div class="card">
+        <h3>الكتب النشطة</h3>
+        <p>@Model.ActiveBooks</p>
+    </div>
+    <div class="card">
+        <h3>الكتب غير النشطة</h3>
+        <p>@Model.InactiveBooks</p>
+    </div>
+</div>
 </div>
 
 <style>
-    .dashboard-container {
-        text-align: center;
-        margin-top: 20px;
+    .dashboard-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 
-    .stats p {
-        font-size: 18px;
+    .card {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
+
+        .card h3 {
+            color: #6b4f34;
+        }
+
+        .card p {
+            font-size: 24px;
+            color: #333;
+        }
 </style>
