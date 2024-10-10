@@ -22,12 +22,16 @@
 
                         <div class="row mt-4">
                             @foreach (var book in Model)
+
                             {
+
                                 <div class="col-md-3">
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
-                                            <img src="~/templates/images/product-item1.jpg" alt="Books" class="product-item">
+                                            <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="Books" class="product-item">
+
+
 
                                             <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                                 Add to
@@ -40,7 +44,8 @@
                                             <div class="item-price">@book.Price</div>
                                         </figcaption>
                                     </div>
-                                </div>}
+                                </div>
+                                }
                         </div>
 
 

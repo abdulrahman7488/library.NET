@@ -100,7 +100,7 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
-                                            <img src="~/templates/images/product-item1.jpg" alt="Books" class="product-item">
+                                            <img src="@book.ImagePath" alt="Books" class="product-item">
 
                                             <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                                                 Add to
