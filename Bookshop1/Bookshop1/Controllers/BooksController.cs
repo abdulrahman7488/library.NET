@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bookshop1.Models;
+using System.IO;
 
 namespace Bookshop1.Controllers
 {
@@ -62,14 +63,26 @@ namespace Bookshop1.Controllers
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image,Description")] Book book)
+        public ActionResult Create([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,Description,ImagePath")] Book book, HttpPostedFileBase ImageFile)
         {
             if (ModelState.IsValid)
             {
+                // تحقق من أن المستخدم قام برفع صورة
+                if (ImageFile != null)
+                {
+                    // مسار تخزين الصورة في المجلد "Images"
+                    string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+                    string extension = Path.GetExtension(ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension; // اسم فريد للملف
+                    book.ImagePath = "~/Images/" + fileName;
+
+                    // حفظ الصورة الفعلية في المجلد "Images"
+                    fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                    ImageFile.SaveAs(fileName);
+                }
+
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -96,14 +109,26 @@ namespace Bookshop1.Controllers
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,image,Description")] Book book)
+        public ActionResult Edit([Bind(Include = "BookID,Title,Author,Price,ISBN,PublishedYear,CategoryID,number_of_books,Description,ImagePath")] Book book, HttpPostedFileBase ImageFile)
         {
             if (ModelState.IsValid)
             {
+                // إذا قام المستخدم برفع صورة جديدة، يتم تحديث المسار
+                if (ImageFile != null)
+                {
+                    // مسار تخزين الصورة في المجلد "Images"
+                    string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+                    string extension = Path.GetExtension(ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension; // اسم فريد للملف
+                    book.ImagePath = "~/Images/" + fileName;
+
+                    // حفظ الصورة الفعلية في المجلد "Images"
+                    fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                    ImageFile.SaveAs(fileName);
+                }
+
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

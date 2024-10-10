@@ -30,11 +30,24 @@ namespace Bookshop1.Controllers
             return View();
         }
 
+        // تعديل الأكشن Contact ليشمل التعامل مع نموذج الاتصال
+        [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(ContactModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // هنا يمكنك إضافة الكود لحفظ الرسالة في قاعدة البيانات أو إرسالها للبريد الإلكتروني
+                ViewBag.Message = "تم إرسال رسالتك بنجاح. شكرًا لتواصلك معنا!";
+                ModelState.Clear(); // مسح النموذج بعد الإرسال
+            }
+            return View(model);
         }
     }
 }

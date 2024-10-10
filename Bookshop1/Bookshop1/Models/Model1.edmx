@@ -27,8 +27,9 @@
           <Property Name="PublishedYear" Type="int" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="number_of_books" Type="int" />
-          <Property Name="image" Type="image" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="imeges" Type="nvarchar(max)" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="CartItems">
           <Key>
@@ -205,10 +206,11 @@
           <Property Name="PublishedYear" Type="Int32" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="number_of_books" Type="Int32" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Books__CategoryI__3C69FB99" FromRole="Books" ToRole="Categories" />
           <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItems__BookI__4316F928" FromRole="Books" ToRole="CartItems" />
+          <Property Name="imeges" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CartItem">
           <Key>
@@ -387,6 +389,8 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="libraryModel.Book">
               <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="imeges" ColumnName="imeges" />
                 <ScalarProperty Name="BookID" ColumnName="BookID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
@@ -395,7 +399,6 @@
                 <ScalarProperty Name="PublishedYear" ColumnName="PublishedYear" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="number_of_books" ColumnName="number_of_books" />
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>

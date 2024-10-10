@@ -15,6 +15,8 @@
     <EntitySetMapping Name="Books">
       <EntityTypeMapping TypeName="libraryModel.Book">
         <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="imeges" ColumnName="imeges" />
           <ScalarProperty Name="BookID" ColumnName="BookID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Author" ColumnName="Author" />
@@ -23,7 +25,6 @@
           <ScalarProperty Name="PublishedYear" ColumnName="PublishedYear" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="number_of_books" ColumnName="number_of_books" />
-          <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>

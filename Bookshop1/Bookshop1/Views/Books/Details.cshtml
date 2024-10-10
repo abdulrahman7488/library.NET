@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/View.cshtml";
+
 }
 
 <div class="book-details-container" style="padding: 20px; font-family: Arial, sans-serif;">
@@ -10,6 +12,7 @@
     </div>
 
     <div class="book-content" style="display: flex; margin-top: 20px;">
+
         <!-- قسم صورة الكتاب -->
         <div class="book-image" style="flex: 1; margin-right: 20px;">
             <img src="~/Content/Images/book-placeholder.jpg" alt="@Model.Title" style="width: 100%; max-width: 300px; border: 1px solid #ddd;">

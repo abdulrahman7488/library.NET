@@ -28,8 +28,9 @@ namespace Bookshop1.Models
         public Nullable<int> PublishedYear { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> number_of_books { get; set; }
-        public byte[] image { get; set; }
         public string Description { get; set; }
+        public string imeges { get; set; }
+        public string ImagePath { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

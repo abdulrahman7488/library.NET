@@ -22,8 +22,9 @@
     <Property Name="PublishedYear" Type="int" />
     <Property Name="CategoryID" Type="int" />
     <Property Name="number_of_books" Type="int" />
-    <Property Name="image" Type="image" />
     <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="imeges" Type="nvarchar(max)" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="CartItems">
     <Key>

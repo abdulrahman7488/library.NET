@@ -189,6 +189,7 @@
     <Compile Include="Models\Book.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BookViewModel.cs" />
     <Compile Include="Models\CartItem.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -196,6 +197,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryBookViewModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\DashboardStatistic.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -403,9 +405,11 @@
     <Content Include="Views\DashboardStatistics\Details.cshtml" />
     <Content Include="Views\DashboardStatistics\Edit.cshtml" />
     <Content Include="Views\DashboardStatistics\Index.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Books by Category";
+    Layout = "~/Views/Shared/View.cshtml";
+
 }
 
 <div class="container">
@@ -13,7 +15,7 @@
                 <div class="product-item">
                     <figure class="product-style">
                         <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
-                        <img src="@book.image" alt="Books" class="product-item">
+                        <img src="~/templates/images/product-item4.jpg" alt="Books" class="product-item">
 
                         <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
                             Add to
