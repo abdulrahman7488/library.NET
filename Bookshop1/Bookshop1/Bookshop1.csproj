@@ -815,7 +815,7 @@
     <Content Include="Views\DashboardStatistics\Edit.cshtml" />
     <Content Include="Views\DashboardStatistics\Index.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
-    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Shared\Layoutdashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
