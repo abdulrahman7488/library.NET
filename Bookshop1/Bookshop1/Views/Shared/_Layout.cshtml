@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<html lang="en">
 
 <head>
     <title>BookSaw -  Book Store </title>
@@ -57,21 +56,7 @@
                                 </span>
                             </a>
 
-                            <div class="action-menu">
-                                <div class="search-bar" style="display: flex; align-items: center; width: 300px;">
-                                    <!-- تعديل العرض الإجمالي -->
-                                    <a href="#" class="search-button search-toggle" data-selector="#header-wrap" style="background-color: #6f4e37; border-radius: 0 20px 20px 0; display: flex; align-items: center;">
-                                        <i class="icon icon-search" style="color: #fff; padding: 10px;"></i>
-                                    </a>
-                                    <!-- تعديل كود الفورم ليرسل طلب GET إلى BooksController -->
-                                    <form role="search" method="get" action="/Books" style="display: flex; width: 100%; margin: 0;">
-                                        <input class="search-field text search-input" name="searchQuery" placeholder="Search" type="search"
-                                               style="width: 100%; padding: 8px 10px; border-radius: 20px 0 0 20px; border: 1px solid #ddd; font-size: 16px;">
 
-                                        <button type="submit" class="btn btn-primary" style="display: none;">Search</button>
-                                    </form>
-                                </div>
-                            </div>
 
 
 
@@ -129,100 +114,59 @@
 
     </div><!--header-wrap-->
 
-    <section id="billboard">
+    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
 
+    <div id="footer-bottom">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
 
-                    <button class="prev slick-arrow">
-                        <i class="icon icon-arrow-left"></i>
-                    </button>
+                    <div class="copyright">
+                        <div class="row">
 
-                    <div class="main-slider pattern-overlay">
-                        <!--slider-item-->
-                        @foreach (var book in Model.Books)
-                        {
-                            <div class="slider-item">
-                                <div class="banner-content">
-                                    <h2 class="banner-title">@book.Title</h2>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-                                        ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-                                        urna, a eu.
-                                    </p>
-                                    <div class="btn-wrap">
-                                        <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary" class="btn btn-outline-accent btn-accent-arrow">
-                                            Read More<i class="icon icon-ns-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div><!--banner-content-->
-                                <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="banner" class="banner-image">
-                            </div><!--slider-item-->
-                        }
-                        </div><!--slider-->
-
-                    <button class="next slick-arrow">
-                        <i class="icon icon-arrow-right"></i>
-                    </button>
-
-                </div>
-            </div>
-        </div>
-
-    </section>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        </div>
-
-        <div id="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="copyright">
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <p>
-                                        © 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a>
-                                    </p>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="social-links align-right">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="icon icon-facebook"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="icon icon-twitter"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="icon icon-youtube-play"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="icon icon-behance-square"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
+                            <div class="col-md-6">
+                                <p>
+                                    © 2022 All rights reserved. Free HTML Template by <a href="https://www.templatesjungle.com/" target="_blank">TemplatesJungle</a>
+                                </p>
                             </div>
-                        </div><!--grid-->
 
-                    </div><!--footer-bottom-content-->
-                </div>
+                            <div class="col-md-6">
+                                <div class="social-links align-right">
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i class="icon icon-facebook"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="icon icon-twitter"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="icon icon-youtube-play"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="icon icon-behance-square"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!--grid-->
+
+                </div><!--footer-bottom-content-->
             </div>
         </div>
+    </div>
 
-        <script src="~/templates/js/jquery-1.11.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-                crossorigin="anonymous"></script>
-        <script src="~/templates/js/plugins.js"></script>
-        <script src="~/templates/js/script.js"></script>
+    <script src="~/templates/js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <script src="~/templates/js/plugins.js"></script>
+    <script src="~/templates/js/script.js"></script>
 
 </body>
 

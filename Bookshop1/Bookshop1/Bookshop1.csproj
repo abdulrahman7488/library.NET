@@ -332,6 +332,14 @@
     <Content Include="templates\js\slideNav.js" />
     <Content Include="templates\js\slideNav.min.js" />
     <Content Include="templates\style.css" />
+    <Content Include="templet_das\assets\demo\chart-area-demo.js" />
+    <Content Include="templet_das\assets\demo\chart-bar-demo.js" />
+    <Content Include="templet_das\assets\demo\chart-pie-demo.js" />
+    <Content Include="templet_das\assets\demo\datatables-demo.js" />
+    <Content Include="templet_das\assets\img\error-404-monochrome.svg" />
+    <Content Include="templet_das\css\styles.css" />
+    <Content Include="templet_das\js\datatables-simple-demo.js" />
+    <Content Include="templet_das\js\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -407,6 +415,7 @@
     <Content Include="Views\DashboardStatistics\Edit.cshtml" />
     <Content Include="Views\DashboardStatistics\Index.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Shared\dash.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

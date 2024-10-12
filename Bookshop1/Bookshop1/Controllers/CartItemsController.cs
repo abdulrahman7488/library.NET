@@ -17,7 +17,7 @@ namespace Bookshop1.Controllers
         // GET: CartItems
         public ActionResult Index()
         {
-            var cartItems = db.CartItems.Include(c => c.Book).Include(c => c.ShoppingCart).Include(c => c.User);
+            var cartItems = db.CartItems.Include(c => c.Book).Include(c => c.ShoppingCart).Include(c => c.User).Include(c => c.Book);
             return View(cartItems.ToList());
         }
 
