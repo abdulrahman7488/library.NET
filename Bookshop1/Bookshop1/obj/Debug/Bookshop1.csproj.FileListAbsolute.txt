@@ -194,4 +194,3 @@ C:\Users\abdurhman\Desktop\library.NET\Bookshop1\Bookshop1\bin\roslyn\System.Buf
 C:\Users\abdurhman\Desktop\library.NET\Bookshop1\Bookshop1\bin\roslyn\System.Memory.dll
 C:\Users\abdurhman\Desktop\library.NET\Bookshop1\Bookshop1\bin\roslyn\System.Numerics.Vectors.dll
 C:\Users\abdurhman\Desktop\library.NET\Bookshop1\Bookshop1\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
-C:\Users\abdurhman\Desktop\library.NET\Bookshop1\Bookshop1\obj\Debug\Bookshop1.csproj.AssemblyReference.cache

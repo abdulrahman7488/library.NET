@@ -8,6 +8,51 @@
 
 
 
+<section id="billboard">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <button class="prev slick-arrow">
+                    <i class="icon icon-arrow-left"></i>
+                </button>
+
+                <div class="main-slider pattern-overlay">
+                    @foreach (var book in Model.Books)
+                    {
+                        <div class="slider-item">
+                            <div class="banner-content">
+                                <h2 class="banner-title">@book.Title</h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
+                                    ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
+                                    urna, a eu.
+                                </p>
+                                <div class="btn-wrap">
+                                    <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-outline-accent btn-accent-arrow">
+                                        Read More<i class="icon icon-ns-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div><!--banner-content-->
+                            <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" class="banner-image" style="width: 400px; height: 500px;" />
+                        </div><!--slider-item-->
+                    }
+
+                    </div><!--slider-->
+
+                <button class="next slick-arrow">
+                    <i class="icon icon-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
