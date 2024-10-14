@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dash.cshtml";
 }
 
 <h2>Delete</h2>
@@ -60,11 +61,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.image)
+            @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.image)
+            @Html.DisplayFor(model => model.ImagePath)
         </dd>
 
         <dt>

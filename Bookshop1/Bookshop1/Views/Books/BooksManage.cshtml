@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Bookshop1.Models.Book>
+
+
+@{
+    ViewBag.Title = "BooksManage";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">إدارة الكتب</h2>
+            <a href="@Url.Action("Create", "Books")" class="btn btn-primary mb-3">إضافة كتاب جديد</a>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>عنوان الكتاب</th>
+                        <th>المؤلف</th>
+                        <th>الفئة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+        <tr>
+            <td>@book.BookID</td>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Category.CategoryName</td>
+            <td>
+                <a href="@Url.Action("Edit", "Books", new { id = book.BookID })" class="btn btn-sm btn-warning">تعديل</a>
+                <a href="@Url.Action("Delete", "Books", new { id = book.BookID })" class="btn btn-sm btn-danger">حذف</a>
+                <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-sm btn-info">تفاصيل</a>
+            </td>
+        </tr>}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

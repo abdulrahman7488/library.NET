@@ -29,108 +29,87 @@ namespace Bookshop1.Controllers
             return View(dashboardStatistics);
         }
 
-        // GET: DashboardStatistics/Details/5
-        public ActionResult Details(int? id)
+        // عرض الكتب في لوحة التحكم
+        public ActionResult ManageBooks()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DashboardStatistic dashboardStatistic = db.DashboardStatistics.Find(id);
-            if (dashboardStatistic == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dashboardStatistic);
+            var books = db.Books.ToList();
+            return View(books);
         }
 
-        // GET: DashboardStatistics/Create
-        public ActionResult Create()
+        // إضافة كتاب جديد
+        public ActionResult CreateBook()
         {
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
             return View();
         }
 
-        // POST: DashboardStatistics/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TotalBooks,TotalCategories,TotalUsers,ActiveBooks,InactiveBooks")] DashboardStatistic dashboardStatistic)
+        public ActionResult CreateBook(Book book)
         {
             if (ModelState.IsValid)
             {
-                db.DashboardStatistics.Add(dashboardStatistic);
+                db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageBooks");
             }
-
-            return View(dashboardStatistic);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", book.CategoryID);
+            return View(book);
         }
 
-        // GET: DashboardStatistics/Edit/5
-        public ActionResult Edit(int? id)
+        // تعديل كتاب
+        public ActionResult EditBook(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DashboardStatistic dashboardStatistic = db.DashboardStatistics.Find(id);
-            if (dashboardStatistic == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(dashboardStatistic);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", book.CategoryID);
+            return View(book);
         }
 
-        // POST: DashboardStatistics/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TotalBooks,TotalCategories,TotalUsers,ActiveBooks,InactiveBooks")] DashboardStatistic dashboardStatistic)
+        public ActionResult EditBook(Book book)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(dashboardStatistic).State = EntityState.Modified;
+                db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageBooks");
             }
-            return View(dashboardStatistic);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", book.CategoryID);
+            return View(book);
         }
 
-        // GET: DashboardStatistics/Delete/5
-        public ActionResult Delete(int? id)
+        // حذف كتاب
+        public ActionResult DeleteBook(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DashboardStatistic dashboardStatistic = db.DashboardStatistics.Find(id);
-            if (dashboardStatistic == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(dashboardStatistic);
+            return View(book);
         }
 
-        // POST: DashboardStatistics/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteBook")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteBookConfirmed(int id)
         {
-            DashboardStatistic dashboardStatistic = db.DashboardStatistics.Find(id);
-            db.DashboardStatistics.Remove(dashboardStatistic);
+            Book book = db.Books.Find(id);
+            db.Books.Remove(book);
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return RedirectToAction("ManageBooks");
         }
     }
 }

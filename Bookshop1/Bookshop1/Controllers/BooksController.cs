@@ -15,6 +15,12 @@ namespace Bookshop1.Controllers
     {
         private libraryEntities db = new libraryEntities();
 
+        public ActionResult BooksManage()
+        {
+            var books = db.Books.ToList();
+            return View(books);
+        }
+
         // GET: Books
         public ActionResult Index(string searchQuery)
         {

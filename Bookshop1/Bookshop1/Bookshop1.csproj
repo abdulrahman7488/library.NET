@@ -416,6 +416,8 @@
     <Content Include="Views\DashboardStatistics\Index.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Shared\dash.cshtml" />
+    <Content Include="Views\Books\BooksManage.cshtml" />
+    <Content Include="Views\Users\ContactViwe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
