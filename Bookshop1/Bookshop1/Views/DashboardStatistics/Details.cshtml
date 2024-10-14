@@ -1,0 +1,58 @@
+﻿@model Bookshop1.Models.DashboardStatistic
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DashboardStatistic</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalBooks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalBooks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCategories)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCategories)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalUsers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalUsers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActiveBooks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActiveBooks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InactiveBooks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InactiveBooks)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

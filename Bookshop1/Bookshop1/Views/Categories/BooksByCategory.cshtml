@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Bookshop1.Models.Book>
+
+@{
+    ViewBag.Title = "Books by Category";
+    Layout = "~/Views/Shared/View.cshtml";
+
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-3">
+                <div class="product-item">
+                    <figure class="product-style">
+                        <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
+                        <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="Books" class="product-item">
+
+
+                        <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                            Add to
+                            Cart
+                        </button>
+                    </figure>
+                    <figcaption>
+                        <h3>@book.Title</h3>
+                        <span>@book.Author</span>
+                        <div class="item-price">@book.Price</div>
+                    </figcaption>
+                </div>
+            </div>}
+    </div>
+</div>

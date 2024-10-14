@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Bookshop1.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">إدارة الأقسام</h2>
+            <a href="@Url.Action("Create", "Categories")" class="btn btn-primary mb-3">إضافة قسم جديد</a>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>اسم القسم</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+        <tr>
+            <td>@category.CategoryID</td>
+            <td>@category.CategoryName</td>
+            <td>
+                <a href="@Url.Action("Edit", "Categories", new { id = category.CategoryID })" class="btn btn-sm btn-warning">تعديل</a>
+                <a href="@Url.Action("Delete", "Categories", new { id = category.CategoryID })" class="btn btn-sm btn-danger">حذف</a>
+                <a href="@Url.Action("Details", "Categories", new { id = category.CategoryID })" class="btn btn-sm btn-info">تفاصيل</a>
+            </td>
+        </tr>}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

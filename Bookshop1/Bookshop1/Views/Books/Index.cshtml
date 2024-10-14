@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Bookshop1.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<section id="Books" class="py-5 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="section-header align-center">
+                    <div class="title">
+                        <span>Some quality items</span>
+                    </div>
+                    <h2 class="section-title">Books</h2>
+                </div>
+
+                <div class="product-list" data-aos="fade-up">
+                    <div class="row">
+
+                        <div class="row mt-4">
+                            @foreach (var book in Model)
+
+                            {
+
+                                <div class="col-md-3">
+                                    <div class="product-item">
+                                        <figure class="product-style">
+                                            <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
+                                            <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="Books" class="product-item">
+
+
+
+                                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
+                                                Add to
+                                                Cart
+                                            </button>
+                                        </figure>
+                                        <figcaption>
+                                            <h3>@book.Title</h3>
+                                            <span>@book.Author</span>
+                                            <div class="item-price">@book.Price</div>
+                                        </figcaption>
+                                    </div>
+                                </div>
+                                }
+                        </div>
+
+
+                    </div><!--ft-books-slider-->
+                </div><!--grid-->
+
+
+            </div><!--inner-content-->
+        </div>
+
+
+    </div>
+</section>

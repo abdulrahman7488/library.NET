@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Bookshop1.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">إدارة المستخدمين</h2>
+            <a href="@Url.Action("Create", "Users")" class="btn btn-primary mb-3">إضافة مستخدم جديد</a>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>اسم المستخدم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+        <tr>
+            <td>@user.UserID</td>
+            <td>@user.Username</td>
+            <td>@user.Email</td>
+            <td>
+                <a href="@Url.Action("Edit", "Users", new { id = user.UserID })" class="btn btn-sm btn-warning">تعديل</a>
+                <a href="@Url.Action("Delete", "Users", new { id = user.UserID })" class="btn btn-sm btn-danger">حذف</a>
+                <a href="@Url.Action("Details", "Users", new { id = user.UserID })" class="btn btn-sm btn-info">تفاصيل</a>
+            </td>
+        </tr>}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

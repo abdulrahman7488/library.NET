@@ -1,0 +1,125 @@
+﻿@model Bookshop1.Models.DashboardStatistic
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <div class="stat-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <h3>Total Books</h3>
+            <p>@Model.TotalBooks</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">
+                <i class="fas fa-list-alt"></i>
+            </div>
+            <h3>Total Categories</h3>
+            <p>@Model.TotalCategories</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Total Users</h3>
+            <p>@Model.TotalUsers</p>
+        </div>
+    </div>
+
+    <div class="dashboard-actions">
+        <h3>Management</h3>
+        <ul>
+            <li>@Html.ActionLink("Manage Books", "BooksManage", "Books")</li>
+            <li>@Html.ActionLink("Manage Categories", "Index", "Categories")</li>
+            <li>@Html.ActionLink("Manage Users", "Index", "Users")</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        padding: 20px;
+        background-color: #f0f2f5;
+        font-family: 'Arial', sans-serif;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .dashboard-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .stat-box {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+        width: 200px;
+        transition: background-color 0.3s ease;
+        position: relative;
+    }
+
+    .stat-box:hover {
+        background-color: #0056b3;
+    }
+
+    .stat-box h3 {
+        margin: 10px 0 0;
+        font-size: 18px;
+    }
+
+    .stat-box p {
+        font-size: 30px;
+        margin: 10px 0 0;
+    }
+
+    .stat-icon {
+        font-size: 40px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        opacity: 0.1;
+    }
+
+    .dashboard-actions h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .dashboard-actions ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .dashboard-actions ul li {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .dashboard-actions ul li a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        transition: color 0.2s ease;
+    }
+
+    .dashboard-actions ul li a:hover {
+        color: #0056b3;
+    }
+
+    /* Responsive Design */
+
+</style>
