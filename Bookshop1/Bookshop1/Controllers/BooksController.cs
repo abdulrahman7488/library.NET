@@ -91,7 +91,7 @@ namespace Bookshop1.Controllers
 
                 db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("BooksManage");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
@@ -137,7 +137,7 @@ namespace Bookshop1.Controllers
 
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("BooksManage");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
             return View(book);
