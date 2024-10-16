@@ -7,52 +7,6 @@
 
 
 
-
-<section id="billboard">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-                <button class="prev slick-arrow">
-                    <i class="icon icon-arrow-left"></i>
-                </button>
-
-                <div class="main-slider pattern-overlay">
-                    @foreach (var book in Model.Books)
-                    {
-                        <div class="slider-item">
-                            <div class="banner-content">
-                                <h2 class="banner-title">@book.Title</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero
-                                    ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis
-                                    urna, a eu.
-                                </p>
-                                <div class="btn-wrap">
-                                    <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-outline-accent btn-accent-arrow">
-                                        Read More<i class="icon icon-ns-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div><!--banner-content-->
-                            <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" class="banner-image" style="width: 400px; height: 550px;" />
-                        </div><!--slider-item-->
-                    }
-
-                    </div><!--slider-->
-
-                <button class="next slick-arrow">
-                    <i class="icon icon-arrow-right"></i>
-                </button>
-
-            </div>
-        </div>
-    </div>
-
-</section>
-
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -147,9 +101,8 @@
                                             <a href="@Url.Action("Details", "Books", new { id = book.BookID })" class="btn btn-primary">View Details</a>
                                             <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="Books" class="product-item">
 
-                                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                                                Add to
-                                                Cart
+                                            <button type="button" class="add-to-cart" data-product-id="@book.BookID">
+                                                Add to Cart
                                             </button>
                                         </figure>
                                         <figcaption>
@@ -186,3 +139,27 @@
         </blockquote>
     </div>
 </section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.add-to-cart', function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Home")',
+            type: 'POST',
+            data: { id: productId },
+            success: function(response) {
+                if (response.success) {
+                    // توجيه المستخدم إلى صفحة العربة
+                    window.location.href = '@Url.Action("Index", "CartItems")';
+                } else {
+                    alert("Failed to add product to cart.");
+                }
+            },
+            error: function() {
+                alert("An error occurred.");
+            }
+        });
+    });
+</script>

@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Bookshop1.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace Bookshop1
 {
@@ -64,5 +66,6 @@ namespace Bookshop1
             //    ClientSecret = ""
             //});
         }
+       
     }
 }

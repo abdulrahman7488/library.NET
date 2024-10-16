@@ -73,12 +73,14 @@ namespace Bookshop1.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    // الحصول على المستخدم الحالي
+                    var user = await UserManager.FindByEmailAsync(model.Email);
+                    // تمرير اسم المستخدم إلى الـ View عن طريق TempData أو ViewBag
+                    TempData["UserName"] = user.UserName;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -116,10 +118,7 @@ namespace Bookshop1.Controllers
                 return View(model);
             }
 
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
+           
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
@@ -151,26 +150,36 @@ namespace Bookshop1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // تحقق مما إذا كان المستخدم Admin وأضفه إلى الدور
+                    if (model.isAdmin)
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // تحقق إذا كان المستخدم Admin ثم وجهه إلى صفحة Dashboard
+                    if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Index", "DashboardStatistics");
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            // إذا فشلت العملية، أعد عرض النموذج
             return View(model);
         }
+
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -386,10 +395,10 @@ namespace Bookshop1.Controllers
         }
 
         //
-        // POST: /Account/LogOff
+        // POST: /Account/LogOut
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LogOut()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");

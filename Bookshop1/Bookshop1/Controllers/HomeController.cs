@@ -1,4 +1,5 @@
 ﻿using Bookshop1.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +50,58 @@ namespace Bookshop1.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public ActionResult AddToCart(int id)
+        {
+            var product = db.Books.Find(id); // البحث عن المنتج بناءً على الـ id
+            if (product == null)
+            {
+                return Json(new { success = false });
+            }
+
+            // استرجاع العربة من الجلسة أو إنشاء عربة جديدة
+            List<CartItem> cart = Session["Cart"] as List<CartItem> ?? new List<CartItem>();
+
+            // تحقق من وجود المنتج بالفعل في العربة
+            var cartItem = cart.FirstOrDefault(x => x.BookID == id);
+            if (cartItem != null)
+            {
+                // زيادة الكمية إذا كان موجودًا
+                cartItem.Quantity++;
+            }
+            else
+            {
+                // إضافة منتج جديد إلى العربة
+                cartItem = new CartItem
+                {
+                    BookID = product.BookID,
+                    Quantity = 1,
+                    Title = product.Title,
+                    Price = product.Price // تأكد من وجود هذا الحقل
+                };
+                cart.Add(cartItem);
+
+                // حفظ المنتج في جدول CartItems في قاعدة البيانات
+                var newCartItem = new CartItem
+                {
+                    BookID = product.BookID,
+                    Title = product.Title,
+                    Quantity = 1,
+                    Price = product.Price // تأكد من وجود هذا الحقل
+                };
+                db.CartItems.Add(newCartItem);
+                db.SaveChanges();
+            }
+
+            // حفظ العربة في الجلسة
+            Session["Cart"] = cart;
+
+            // حساب السعر الكلي
+            decimal totalPrice = (decimal)cart.Sum(c => c.Quantity * c.Price);
+
+            return Json(new { success = true, totalPrice = totalPrice });
+        }
+        // دالة لحساب السعر الكلي
+
     }
 }

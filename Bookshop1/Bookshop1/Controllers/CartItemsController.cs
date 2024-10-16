@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bookshop1.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bookshop1.Controllers
 {
@@ -17,9 +18,11 @@ namespace Bookshop1.Controllers
         // GET: CartItems
         public ActionResult Index()
         {
-            var cartItems = db.CartItems.Include(c => c.Book).Include(c => c.ShoppingCart).Include(c => c.User).Include(c => c.Book);
-            return View(cartItems.ToList());
+            // استرجاع العربة من الجلسة
+            List<CartItem> cart = Session["Cart"] as List<CartItem> ?? new List<CartItem>();
+            return View(cart);
         }
+
 
         // GET: CartItems/Details/5
         public ActionResult Details(int? id)
@@ -103,30 +106,55 @@ namespace Bookshop1.Controllers
         }
 
         // GET: CartItems/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CartItem cartItem = db.CartItems.Find(id);
+            var cartItem = db.CartItems.SingleOrDefault(c => c.CartItemID == id);
             if (cartItem == null)
             {
-                return HttpNotFound();
+                TempData["Message"] = "Item not found.";
+                return RedirectToAction("Index");
             }
+
             return View(cartItem);
         }
 
-        // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CartItem cartItem = db.CartItems.Find(id);
-            db.CartItems.Remove(cartItem);
-            db.SaveChanges();
+            // حذف العنصر من قاعدة البيانات
+            var cartItem = db.CartItems.SingleOrDefault(c => c.CartItemID == id);
+            if (cartItem != null)
+            {
+                db.CartItems.Remove(cartItem);
+                db.SaveChanges();
+
+                // إذا كانت العربة محفوظة في الجلسة، نقوم بحذف العنصر منها أيضًا
+                List<CartItem> cart = Session["Cart"] as List<CartItem>;
+                if (cart != null)
+                {
+                    var sessionCartItem = cart.SingleOrDefault(c => c.CartItemID == id);
+                    if (sessionCartItem != null)
+                    {
+                        cart.Remove(sessionCartItem);
+                        Session["Cart"] = cart; // تحديث العربة في الجلسة
+                    }
+                }
+
+                TempData["Message"] = "Item deleted successfully.";
+            }
+            else
+            {
+                TempData["Message"] = "Item not found.";
+            }
+
             return RedirectToAction("Index");
         }
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -136,5 +164,7 @@ namespace Bookshop1.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

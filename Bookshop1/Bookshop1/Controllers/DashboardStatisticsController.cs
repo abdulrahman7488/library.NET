@@ -14,7 +14,7 @@ namespace Bookshop1.Controllers
     {
         private libraryEntities db = new libraryEntities();
 
-
+        [Authorize(Roles = "Admin")]
         // GET: DashboardStatistics
         public ActionResult Index()
         {

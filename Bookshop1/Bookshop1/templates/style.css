@@ -790,8 +790,8 @@ figure,
 table,
 p,
 ul,
-ol,
-form {
+ol
+{
   margin-bottom: 2.5rem;
 }
 
@@ -1738,6 +1738,9 @@ img.post-image {
 #header-wrap .action-menu {
   display: inline-block;
   align-items: baseline;
+}
+.logout {
+    margin-top: 15px;
 }
 
 #header-wrap .action-menu span.opennav.openicon {

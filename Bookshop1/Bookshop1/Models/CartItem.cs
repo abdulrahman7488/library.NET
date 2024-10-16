@@ -11,9 +11,11 @@ namespace Bookshop1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class CartItem
     {
+        [Key]
         public int CartItemID { get; set; }
         public Nullable<int> CartID { get; set; }
         public Nullable<int> BookID { get; set; }
@@ -25,5 +27,7 @@ namespace Bookshop1.Models
         public virtual Book Book { get; set; }
         public virtual ShoppingCart ShoppingCart { get; set; }
         public virtual User User { get; set; }
+
+        
     }
 }

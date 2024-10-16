@@ -46,14 +46,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="right-element">
-                            <a href="#" class="user-account for-buy">
+
+                            <a href="/Account/Login" class="user-account for-buy">
                                 <i class="icon icon-user"></i><span>Account</span>
                             </a>
-                            <a href="#" class="cart for-buy">
-                                <i class="icon icon-clipboard"></i><span>
-                                    Cart:(0
-                                    $)
-                                </span>
+                            <a href="@Url.Action("Index", "CartItems")" class="cart for-buy">
+                                <i class="icon icon-clipboard"></i>
+                               
+                                    <span>Cart</span>
+                                
                             </a>
 
 
@@ -73,7 +74,9 @@
 
                     <div class="col-md-2">
                         <div class="main-logo">
-                            <a href="index.html"><img src="~/templates/images/main-logo.png" alt="logo"></a>
+                            <a href="@Url.Action("Index", "Home")">
+                                <img src="~/templates/images/main-logo.png" alt="logo" />
+                            </a>
                         </div>
 
                     </div>
@@ -85,15 +88,7 @@
                                 <ul class="menu-list">
                                     <li class="menu-item active"><a href="/Home/Index">Home</a></li>
                                     <li class="menu-item active"><a href="/Home/Contact">Contact</a></li>
-                                    <li class="menu-item has-sub">
-
-
-                                        <ul>
-                                            <li class="active"><a href="index.html">Home</a></li>
-                                            >
-                                        </ul>
-
-                                    </li>
+                                    @Html.Partial("_LoginPartial")
 
                                 </ul>
 
@@ -114,7 +109,7 @@
 
     </div><!--header-wrap-->
 
-    
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -167,6 +162,8 @@
             crossorigin="anonymous"></script>
     <script src="~/templates/js/plugins.js"></script>
     <script src="~/templates/js/script.js"></script>
+    @RenderSection("Scripts", required: false) <!-- تقديم القسم هنا -->
+
 
 </body>
 

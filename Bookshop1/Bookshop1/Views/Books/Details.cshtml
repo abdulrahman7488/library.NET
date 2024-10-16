@@ -1,14 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/View.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
 <div class="book-details-container" style="padding: 20px; font-family: Arial, sans-serif;">
     <div class="book-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="font-size: 2em; color: #333;">@Model.Title</h1>
-        <a href="/Home/Index" class="btn-back" style="padding: 10px 15px; background-color: #f0f0f0; border: 1px solid #ccc; text-decoration: none; color: #333;">العودة إلى القائمة</a>
     </div>
 
     <div class="book-content" style="display: flex; margin-top: 20px;">
@@ -23,7 +22,6 @@
             <p style="font-size: 1.2em;"><strong>الكاتب:</strong> @Model.Author</p>
             <p style="font-size: 1.2em;"><strong>الفئة:</strong> @Model.Category.CategoryName</p>
             <p style="font-size: 1.2em; margin-top: 20px;"><strong>الوصف:</strong>@Model.Description</p>
-            <p style="line-height: 1.6;">هنا يمكنك إضافة وصف الكتاب، يتضمن نبذة عن القصة أو المحتوى، المعلومات الهامة التي قد تهم القارئ.</p>
 
             <!-- إضافة زر إذا كنت تريد دمج عمليات أخرى -->
             <div style="margin-top: 30px;">

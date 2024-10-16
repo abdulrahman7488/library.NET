@@ -65,6 +65,10 @@ namespace Bookshop1.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -79,6 +83,8 @@ namespace Bookshop1.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public bool isAdmin { get; set; }
+
     }
 
     public class ResetPasswordViewModel
