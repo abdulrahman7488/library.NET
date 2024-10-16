@@ -109,11 +109,26 @@ namespace Bookshop1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            User user = db.Users.Include(u => u.ShoppingCarts.Select(sc => sc.CartItems)).SingleOrDefault(u => u.UserID == id);
+
+            if (user != null)
+            {
+                // أولاً، قم بإزالة جميع عناصر السلة المرتبطة بسلات التسوق الخاصة بالمستخدم
+                foreach (var cart in user.ShoppingCarts)
+                {
+                    db.CartItems.RemoveRange(cart.CartItems);
+                }
+                // ثم قم بإزالة سلات التسوق
+                db.ShoppingCarts.RemoveRange(user.ShoppingCarts);
+                // وأخيرًا، قم بإزالة المستخدم
+                db.Users.Remove(user);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
+
+
 
         protected override void Dispose(bool disposing)
         {
