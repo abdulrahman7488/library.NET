@@ -118,31 +118,29 @@ namespace Bookshop1.Controllers
 
             return View(cartItem);
         }
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            // حذف العنصر من قاعدة البيانات
             var cartItem = db.CartItems.SingleOrDefault(c => c.CartItemID == id);
             if (cartItem != null)
             {
-                db.CartItems.Remove(cartItem);
+                cartItem.IsDeleted = true; // تغيير القيمة بدلاً من الحذف
                 db.SaveChanges();
 
-                // إذا كانت العربة محفوظة في الجلسة، نقوم بحذف العنصر منها أيضًا
+                // تحديث العربة في الجلسة إذا كانت موجودة
                 List<CartItem> cart = Session["Cart"] as List<CartItem>;
                 if (cart != null)
                 {
                     var sessionCartItem = cart.SingleOrDefault(c => c.CartItemID == id);
                     if (sessionCartItem != null)
                     {
-                        cart.Remove(sessionCartItem);
+                        sessionCartItem.IsDeleted = true; // تغيير قيمة العنصر في الجلسة
                         Session["Cart"] = cart; // تحديث العربة في الجلسة
                     }
                 }
 
-                TempData["Message"] = "Item deleted successfully.";
+                TempData["Message"] = "Item marked as deleted successfully.";
             }
             else
             {
@@ -151,7 +149,6 @@ namespace Bookshop1.Controllers
 
             return RedirectToAction("Index");
         }
-
 
 
 
