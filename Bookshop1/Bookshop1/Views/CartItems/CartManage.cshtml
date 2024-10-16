@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "CartManage";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<h2>Cart Items</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Book Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cart in Model)
+        {
+            <tr>
+                <td>@cart.CartID</td>
+                <td>@cart.User.Username</td>
+                <td>@cart.TotalPrice</td>
+                <td>
+                    @Html.ActionLink("View Items", "ViewCartItems", "CartItems", new { id = cart.CartID }, null) |
+                    @Html.ActionLink("Manage", "CartManage", "CartItems", new { id = cart.CartID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "ShoppingCarts", new { id = cart.CartID }, new { onclick = "return confirm('Are you sure you want to delete this cart?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

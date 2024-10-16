@@ -23,6 +23,20 @@ namespace Bookshop1.Controllers
             return View(cart);
         }
 
+        public ActionResult CartManage(int id)
+        {
+            // تحقق من وجود العربة في قاعدة البيانات
+            var cart = db.ShoppingCarts.Find(id);
+            if (cart == null)
+            {
+                return HttpNotFound();
+            }
+
+            // معالجة البيانات وإرجاع العرض
+            return View(cart);
+        }
+
+
 
         // GET: CartItems/Details/5
         public ActionResult Details(int? id)
@@ -121,16 +135,18 @@ namespace Bookshop1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
         public ActionResult DeleteConfirmed(int id)
         {
             // حذف العنصر من قاعدة البيانات
+
             var cartItem = db.CartItems.SingleOrDefault(c => c.CartItemID == id);
             if (cartItem != null)
             {
                 db.CartItems.Remove(cartItem);
                 db.SaveChanges();
 
-                // إذا كانت العربة محفوظة في الجلسة، نقوم بحذف العنصر منها أيضًا
+                // تحديث العربة في الجلسة
                 List<CartItem> cart = Session["Cart"] as List<CartItem>;
                 if (cart != null)
                 {
@@ -151,6 +167,7 @@ namespace Bookshop1.Controllers
 
             return RedirectToAction("Index");
         }
+
 
 
 
