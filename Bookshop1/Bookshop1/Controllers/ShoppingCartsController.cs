@@ -20,6 +20,12 @@ namespace Bookshop1.Controllers
             var shoppingCarts = db.ShoppingCarts.Include(s => s.User);
             return View(shoppingCarts.ToList());
         }
+        public ActionResult ManageCarts()
+        {
+            var shoppingCarts = db.ShoppingCarts.Include(s => s.User).ToList();
+            return View(shoppingCarts);
+        }
+
 
         // GET: ShoppingCarts/Details/5
         public ActionResult Details(int? id)
@@ -114,9 +120,19 @@ namespace Bookshop1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
-            db.ShoppingCarts.Remove(shoppingCart);
-            db.SaveChanges();
+            ShoppingCart shoppingCart = db.ShoppingCarts.Include(sc => sc.CartItems).SingleOrDefault(sc => sc.CartID == id);
+
+            if (shoppingCart != null)
+            {
+                // حذف العناصر المرتبطة أولاً
+                db.CartItems.RemoveRange(shoppingCart.CartItems);
+
+                // ثم حذف سلة التسوق
+                db.ShoppingCarts.Remove(shoppingCart);
+
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 

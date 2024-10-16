@@ -163,11 +163,20 @@ namespace Bookshop1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // العثور على الكتاب
             Book book = db.Books.Find(id);
+
+            // حذف العناصر المرتبطة بالكتاب من CartItems
+            var cartItems = db.CartItems.Where(c => c.BookID == id).ToList();
+            db.CartItems.RemoveRange(cartItems);
+
+            // حذف الكتاب
             db.Books.Remove(book);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("BooksManage");
         }
+
 
         protected override void Dispose(bool disposing)
         {
