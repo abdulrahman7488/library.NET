@@ -18,9 +18,8 @@
                         <img src="@Url.Content(string.IsNullOrEmpty(book.ImagePath) ? "~/Images/placeholder.png" : book.ImagePath)" alt="Books" class="product-item">
 
 
-                        <button type="button" class="add-to-cart" data-product-tile="add-to-cart">
-                            Add to
-                            Cart
+                        <button type="button" class="add-to-cart" data-product-id="@book.BookID">
+                            Add to Cart
                         </button>
                     </figure>
                     <figcaption>
@@ -32,3 +31,27 @@
             </div>}
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.add-to-cart', function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Home")',
+            type: 'POST',
+            data: { id: productId },
+            success: function(response) {
+                if (response.success) {
+                    // توجيه المستخدم إلى صفحة العربة
+                    window.location.href = '@Url.Action("Index", "CartItems")';
+                } else {
+                    alert("Failed to add product to cart.");
+                }
+            },
+            error: function() {
+                alert("An error occurred.");
+            }
+        });
+    });
+</script>

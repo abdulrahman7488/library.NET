@@ -17,13 +17,63 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <style>
+        .nav-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+            .nav-link:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+        .sb-nav-link-icon {
+            margin-right: 10px;
+        }
+
+        .sb-sidenav-collapse-arrow i {
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link.collapsed .sb-sidenav-collapse-arrow i {
+            transform: rotate(180deg);
+        }
+
+        .collapse .submenu {
+            padding-left: 20px;
+        }
+
+        .submenu li {
+            margin: 8px 0;
+        }
+
+        .submenu a {
+            text-decoration:none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+            .submenu a:hover {
+                color: #419d3e;
+                text-decoration: underline;
+            }
+    </style>
+    
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
-        
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
@@ -49,23 +99,18 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Pages
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
                         </a>
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                            </nav>
+                        <div id="collapsePages" class="collapse">
+                            <ul class="list-unstyled submenu">
+                                <li>@Html.ActionLink("Manage Books", "BooksManage", "Books")</li>
+                                <li>@Html.ActionLink("Manage Categories", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Manage Users", "Index", "Users")</li>
+                            </ul>
                         </div>
+
                         <div class="sb-sidenav-menu-heading">Addons</div>
 
                     </div>
@@ -82,13 +127,13 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <p class="mb-0">
-                               
+
                                 <code></code>
-                               
+
                                 <code>
                                     @RenderBody()
                                 </code>
-                                
+
                             </p>
                         </div>
                     </div>
