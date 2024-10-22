@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Bookshop1.Models.UserRoleViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">إدارة المستخدمين</h2>
+            <a href="@Url.Action("Create", "Account")" class="btn btn-primary mb-3">إضافة مستخدم جديد</a>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>UserName</th>
+                        <th> Email</th>
+                        <th>Actions</th>
+                        <th>Role</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                @if (user.Roles != null && user.Roles.Any())
+                                {
+                                    @foreach (var role in user.Roles)
+                                    {
+                                        <span class="badge badge-secondary">@role</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>لا توجد أدوار</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("تعديل", "Edit", new { id = user.UserId }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("حذف", "Delete", new { id = user.UserId }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Bookshop1.Models;
+using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Bookshop1.Controllers
 {
@@ -17,12 +19,11 @@ namespace Bookshop1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private libraryEntities db = new libraryEntities();
 
-        public AccountController()
-        {
-        }
+        public AccountController() { }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace Bookshop1.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -51,9 +52,161 @@ namespace Bookshop1.Controllers
                 _userManager = value;
             }
         }
+        // GET: /Account/Index
+        [Authorize(Roles = "Admin")] // التأكد من أن هذه الصفحة مرئية فقط للمسؤولين
+        public async Task<ActionResult> Index()
+        {
+            // إرجاع قائمة المستخدمين
+            var users = await UserManager.Users.ToListAsync();
 
-        //
-        // GET: /Account/Login
+            // إعداد قائمة لتخزين معلومات المستخدمين مع أدوارهم
+            var userRoles = new List<UserRoleViewModel>();
+
+            foreach (var user in users)
+            {
+                // الحصول على أدوار المستخدم
+                var roles = await UserManager.GetRolesAsync(user.Id);
+                userRoles.Add(new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    Roles = roles
+                });
+            }
+
+            return View(userRoles);
+        }
+
+       
+
+        // POST: /Account/Create
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    // إضافة المستخدم إلى الدور، إذا كان هناك دور محدد
+                    if (model.isAdmin)
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+
+                    // إعادة توجيه إلى صفحة الفهرس بعد نجاح الإضافة
+                    return RedirectToAction("Index");
+                }
+
+                AddErrors(result);
+            }
+
+            // إذا فشلت العملية، أعد عرض النموذج
+            return View(model);
+        }
+
+        // GET: /Account/Edit/5
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Edit(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var roles = await UserManager.GetRolesAsync(user.Id);
+            var model = new EditUserViewModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                IsAdmin = roles.Contains("Admin")
+            };
+
+            return View(model);
+        }
+
+        // POST: /Account/Edit
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(model.UserId);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+
+                var result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    // تحديث الأدوار
+                    if (model.IsAdmin)
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+                    else
+                    {
+                        await UserManager.RemoveFromRoleAsync(user.Id, "Admin");
+                    }
+
+                    return RedirectToAction("Index");
+                }
+
+                AddErrors(result);
+            }
+
+            return View(model);
+        }
+
+        // GET: /Account/Delete/5
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(user);
+        }
+
+        // POST: /Account/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var result = await UserManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            AddErrors(result);
+            return View(user);
+        }
+
+
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -94,46 +247,6 @@ namespace Bookshop1.Controllers
         }
 
         //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        //
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-           
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
-        }
-
-        //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -143,6 +256,7 @@ namespace Bookshop1.Controllers
 
         //
         // POST: /Account/Register
+        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -151,6 +265,7 @@ namespace Bookshop1.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -159,10 +274,10 @@ namespace Bookshop1.Controllers
                     if (model.isAdmin)
                     {
                         await UserManager.AddToRoleAsync(user.Id, "Admin");
+
                     }
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
                     // تحقق إذا كان المستخدم Admin ثم وجهه إلى صفحة Dashboard
                     if (await UserManager.IsInRoleAsync(user.Id, "Admin"))
                     {
@@ -182,219 +297,6 @@ namespace Bookshop1.Controllers
 
 
         //
-        // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
-
-        //
-        // GET: /Account/ForgotPassword
-        [AllowAnonymous]
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/ForgotPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
-
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPassword
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View();
-        }
-
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
-
-        //
-        // GET: /Account/SendCode
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        //
-        // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            // Generate the token and send it
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
-        }
-
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
-
-        //
         // POST: /Account/LogOut
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -404,36 +306,8 @@ namespace Bookshop1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
         #region Helpers
-        // Used for XSRF protection when adding external logins
+        // XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
@@ -468,7 +342,7 @@ namespace Bookshop1.Controllers
             {
             }
 
-            public ChallengeResult(string provider, string redirectUri, string userId)
+            public ChallengeResult(string provider, string redirectUri, int? userId)
             {
                 LoginProvider = provider;
                 RedirectUri = redirectUri;
@@ -477,14 +351,14 @@ namespace Bookshop1.Controllers
 
             public string LoginProvider { get; set; }
             public string RedirectUri { get; set; }
-            public string UserId { get; set; }
+            public int? UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)
             {
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
+                if (UserId.HasValue)
                 {
-                    properties.Dictionary[XsrfKey] = UserId;
+                    properties.Dictionary[XsrfKey] = UserId.ToString();
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

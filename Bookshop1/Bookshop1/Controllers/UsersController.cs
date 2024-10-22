@@ -13,7 +13,7 @@ namespace Bookshop1.Controllers
     public class UsersController : Controller
     {
         private libraryEntities db = new libraryEntities();
-
+        private ApplicationUserManager _userManager;
         // GET: Users
         public ActionResult Index()
         {
@@ -109,7 +109,9 @@ namespace Bookshop1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Include(u => u.ShoppingCarts.Select(sc => sc.CartItems)).SingleOrDefault(u => u.UserID == id);
+            User user = db.Users
+                          .Include(u => u.ShoppingCarts.Select(sc => sc.CartItems))
+                          .SingleOrDefault(u => u.UserID == id);
 
             if (user != null)
             {

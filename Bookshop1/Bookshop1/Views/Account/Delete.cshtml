@@ -1,0 +1,19 @@
+﻿@model Bookshop1.Models.ApplicationUser
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+
+<h2>حذف المستخدم</h2>
+
+<p>هل أنت متأكد أنك تريد حذف المستخدم "@Model.UserName"؟</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-danger">حذف</button>
+    @Html.ActionLink("إلغاء", "Index", null, new { @class = "btn btn-secondary" })
+}
+

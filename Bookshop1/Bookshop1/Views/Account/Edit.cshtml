@@ -1,0 +1,35 @@
+﻿@model Bookshop1.Models.EditUserViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/dash.cshtml";
+}
+
+
+<h2>تعديل المستخدم</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.IsAdmin)
+        @Html.LabelFor(m => m.IsAdmin)
+    </div>
+
+    <button type="submit" class="btn btn-primary">تعديل</button>
+    @Html.ActionLink("إلغاء", "Index", null, new { @class = "btn btn-secondary" })
+}
+

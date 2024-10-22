@@ -106,6 +106,7 @@ namespace Bookshop1.Controllers
         }
 
         // GET: CartItems/Delete/5
+        // Action for Delete (GET) to display the confirmation page
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -116,27 +117,31 @@ namespace Bookshop1.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(cartItem);
+            return View(cartItem); // Pass the cart item to the view to display
         }
-        [HttpPost, ActionName("Delete")]
+
+        // Action for DeleteConfirmed (POST) to handle the deletion logic
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             var cartItem = db.CartItems.SingleOrDefault(c => c.CartItemID == id);
             if (cartItem != null)
             {
-                cartItem.IsDeleted = true; // تغيير القيمة بدلاً من الحذف
+                cartItem.IsDeleted = true; // Mark item as deleted instead of physical deletion
+                db.SaveChanges();
+                db.Entry(cartItem).State = EntityState.Modified;
                 db.SaveChanges();
 
-                // تحديث العربة في الجلسة إذا كانت موجودة
+                // Update cart in session if exists
                 List<CartItem> cart = Session["Cart"] as List<CartItem>;
                 if (cart != null)
                 {
                     var sessionCartItem = cart.SingleOrDefault(c => c.CartItemID == id);
                     if (sessionCartItem != null)
                     {
-                        sessionCartItem.IsDeleted = true; // تغيير قيمة العنصر في الجلسة
-                        Session["Cart"] = cart; // تحديث العربة في الجلسة
+                        sessionCartItem.IsDeleted = true; // Update the item in session cart
+                        Session["Cart"] = cart; // Refresh session cart
                     }
                 }
 
@@ -149,8 +154,6 @@ namespace Bookshop1.Controllers
 
             return RedirectToAction("Index");
         }
-
-
 
 
         protected override void Dispose(bool disposing)
